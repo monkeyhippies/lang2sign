@@ -15,7 +15,7 @@ data:
 
   # (optional) Models may require additional resource files (e.g. vocabularies).
   source_words_vocabulary: pretrained-embeddings/glove.6B.300d.vocab
-  #target_words_vocabulary: data/toy-ende/tgt-vocab.txt
+  target_words_vocabulary: pretrained-embeddings/glove.6B.300d.vocab
 
   # (optional) OpenNMT tokenization configuration (or path to a configuration file).
   # See also: https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md
