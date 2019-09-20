@@ -140,7 +140,7 @@ params:
   # should be a noise type (can be: "dropout", "replacement", "permutation") and
   # the module arguments
   # (see http://opennmt.net/OpenNMT-tf/package/opennmt.layers.noise.html)
-  #decoding_noise:
+  decoding_noise:
     - dropout: 0.1
   #  - replacement: [0.1, ｟unk｠]
   #  - permutation: 3
