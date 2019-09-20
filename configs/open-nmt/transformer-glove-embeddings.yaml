@@ -1,17 +1,17 @@
 # The directory where models and summaries will be saved. It is created if it does not exist.
-model_dir: transformer-glove/
+model_dir: models/transformer-glove/
 
 data:
   # (required for train_and_eval and train run types).
-  train_features_file: data/enasl/train.en
-  train_labels_file: data/enasl/train.asl
+  train_features_file: data/preprocessed/lang2gloss/enasl/train.en
+  train_labels_file: data/preprocessed/lang2gloss/enasl/train.asl
 
   # (optional) Pharaoh alignments of the training files.
   #train_alignments: data/toy-ende/alignments-train.txt
 
   # (required for train_end_eval and eval run types).
-  eval_features_file: data/enasl/val.en
-  eval_labels_file: data/enasl/val.asl
+  eval_features_file: data/preprocessed/lang2gloss/enasl/val.en
+  eval_labels_file: data/preprocessed/lang2gloss/enasl/val.asl
 
   # (optional) Models may require additional resource files (e.g. vocabularies).
   #source_words_vocabulary: data/toy-ende/src-vocab.txt
@@ -28,7 +28,7 @@ data:
 
   # (optional) Pretrained embedding configuration.
   source_embedding:
-    path: embeddings/glove.6B.300d.txt
+    path: pretrained-embeddings/glove.6B.300d.txt
     with_header: False
     case_insensitive: True
     trainable: True
