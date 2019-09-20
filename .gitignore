@@ -1,3 +1,5 @@
+lang2sign/lang2gloss/embeddings/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
