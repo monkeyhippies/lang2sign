@@ -166,7 +166,7 @@ if __name__ == "__main__":
 		for f in from_filepaths
 	]
 
-	preprocess_textfiles(
+	preprocess_text_files(
 		from_filepaths,
 		to_filepaths
 	)
