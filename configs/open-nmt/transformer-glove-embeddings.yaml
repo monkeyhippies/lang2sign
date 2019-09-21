@@ -174,7 +174,7 @@ params:
 train:
   # (optional when batch_type=tokens) If not set, the training will search the largest
   # possible batch size.
-  batch_size: 2048
+  batch_size: 4096
   # (optional) Batch size is the number of "examples" or "tokens" (default: "examples").
   batch_type: tokens
   # (optional) Tune gradient accumulation to train with at least this effective batch size
@@ -183,10 +183,10 @@ train:
 
   # (optional) Save a checkpoint every this many steps (default: null). Can not be
   # specified with save_checkpoints_secs.
-  save_checkpoints_steps: 10000
+  #save_checkpoints_steps: 10000
   # (optional) Save a checkpoint every this many seconds (default: 600). Can not be
   # specified with save_checkpoints_steps.
-  #save_checkpoints_secs: 600
+  save_checkpoints_secs: 3600
   # (optional) How many checkpoints to keep on disk.
   keep_checkpoint_max: 3
 
@@ -224,7 +224,7 @@ train:
 # (optional) Evaluation options.
 eval:
   # (optional) The batch size to use (default: 32).
-  batch_size: 30
+  batch_size: 32
 
   # (optional) The number of threads to use for processing data in parallel (default: 1).
   num_threads: 1
@@ -232,7 +232,7 @@ eval:
   prefetch_buffer_size: 1
 
   # (optional) Evaluate every this many seconds (default: 18000).
-  eval_delay: 7200
+  eval_delay: 180
 
   # (optional) Save evaluation predictions in model_dir/eval/.
   save_eval_predictions: false
