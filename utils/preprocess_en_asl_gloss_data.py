@@ -70,9 +70,9 @@ class EnAslTokenizer(object):
 
 		tokens = self.tokenize_file(from_filepath)
 		with open(to_filepath, "w") as file_obj:
-			file_obj.write(sep.join(tokens))
+			file_obj.write(sep.join(tokens) + "\n")
 
-def trim_vocab(embedding_filepath, vocab_dict):
+def trim_vocab(embedding_filepath, vocab_dict, case_sensitive=False):
 	"""
 	outputs a new pretrained embedding file with only words
 	from vocab dict
@@ -84,6 +84,8 @@ def trim_vocab(embedding_filepath, vocab_dict):
 		) as write_file_obj:
 			for line in read_file_obj:
 				word = line.split(" ")[0]
+				if not case_sensitive:
+					word = word.lower()
 				if word in vocab_dict:
 					write_file_obj.write(line + "\n")
 
