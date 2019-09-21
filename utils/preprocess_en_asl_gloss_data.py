@@ -69,7 +69,7 @@ class EnAslTokenizer(object):
 			pass
 
 		tokens = self.tokenize_file(from_filepath)
-		with open(to_filepath, "wb") as file_obj:
+		with open(to_filepath, "w") as file_obj:
 			file_obj.write(sep.join(tokens))
 
 def trim_vocab(embedding_filepath, vocab_dict):
