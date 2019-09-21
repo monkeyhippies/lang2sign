@@ -156,8 +156,6 @@ if __name__ == "__main__":
 		args.train_files[0],
 		args.embedding_file
 	)
-	print(args.train_files)
-	print(args.dev_files)
 	from_filepaths = \
 		args.train_files[0] + \
 		args.dev_files[0] + \
