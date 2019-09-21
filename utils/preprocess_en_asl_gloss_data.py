@@ -85,7 +85,7 @@ def trim_vocab(embedding_filepath, vocab_dict):
 			for line in read_file_obj:
 				word = line.split(" ")[0]
 				if word in vocab_dict:
-					write_file_obj.write(line)
+					write_file_obj.write(line + "\n")
 
 def preprocess_embedding(
 	tokenizer, train_text_filepaths, embedding_filepath
