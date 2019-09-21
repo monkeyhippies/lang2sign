@@ -54,7 +54,7 @@ class EnAslTokenizer(object):
 
 		with open(filepath) as file_obj:
 			text = file_obj.read()
-			tokens = self._tokenize_string()
+			tokens = self._tokenize_string(text)
 
 		return tokens
 
