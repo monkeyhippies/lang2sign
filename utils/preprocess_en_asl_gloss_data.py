@@ -4,7 +4,6 @@ import os, errno
 class EnAslTokenizer(object):
 
 	SUBWORD_TOKENS = [
-		"-",
 		"'s",
 		"n't",
 		"'re",
@@ -23,20 +22,19 @@ class EnAslTokenizer(object):
 		# This will let SpaceTokenizer create hyphen tokens
 		# There are no space separated hyphens in our corpus,
 		# so there's no information loss
+		text = text.replace("-", " - ")
 		for subword in self.SUBWORD_TOKENS:
-			text = text.replace(subword, " " + subword + " ")
+			text = text.replace(subword, " " + subword)
 
 		return text.split()
 
 	def _detokenize_string(self, tokens):
 
-		output = super(
-			EnAslTokenizer, self
-		)._detokenize_string(tokens)
-
 		# Detokenize custom subwords
 		for subword in self.SUBWORD_TOKENS:
-			output = output.replace(" - ", "-")
+			output = output.replace(" " + subword, subword)
+
+		text = text.replace(" - ", "-")
 
 		return " ".join(output)
 
@@ -90,10 +88,10 @@ def trim_vocab(embedding_filepath, vocab_dict):
 					write_file_obj.write(line)
 
 def preprocess_embedding(
-	tokenizer, training_text_filepaths, embedding_filepath
+	tokenizer, train_text_filepaths, embedding_filepath
 ):
 
-	tokenizer.fit_to_files(training_text_filepaths)
+	tokenizer.fit_to_files(train_text_filepaths)
 	trim_vocab(embedding_filepath, tokenizer.vocab_dict)
 
 def preprocess_text_files(
@@ -115,7 +113,7 @@ if __name__ == "__main__":
 
 	def list_str(args):
 
-		return args.split("'")
+		return args.split(",")
 
 	parser = argparse.ArgumentParser(
 		description='Preprocess corpus files and embeddings'
@@ -129,8 +127,8 @@ if __name__ == "__main__":
 	)
 
 	parser.add_argument(
-		'--training_files',
-		dest="training_files",
+		'--train_files',
+		dest="train_files",
 		type=list_str,
 		nargs='+',
 		help='list of text training files'
@@ -151,19 +149,19 @@ if __name__ == "__main__":
 		nargs='+',
 		help='list of text test files'
 	)
-
-	args = parser.parse_args()	
+	args = parser.parse_args()
+	print(args.train_files)
 	tokenizer = EnAslTokenizer()
 	preprocess_embedding(
 		tokenizer,
-		args.training_files,
+		args.train_files[0],
 		args.embedding_file
 	)
 
 	from_filepaths = \
-		args.training_files + \
-		args.dev_files + \
-		args.test_files
+		args.train_files[0] + \
+		args.dev_files[0] + \
+		args.test_files[0]
 
 	to_filepaths = [
 		f.replace("/raw/", "/preprocessed/")
