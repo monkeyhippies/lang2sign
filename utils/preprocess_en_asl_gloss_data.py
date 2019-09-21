@@ -80,7 +80,7 @@ def trim_vocab(embedding_filepath, vocab_dict):
 
 	with open(embedding_filepath) as read_file_obj:
 		with open(
-			embedding_filepath + ".trimmed", "wb"
+			embedding_filepath + ".trimmed", "w"
 		) as write_file_obj:
 			for line in read_file_obj:
 				word = line.split(" ")[0]
