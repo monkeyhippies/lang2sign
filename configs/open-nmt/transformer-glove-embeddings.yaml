@@ -3,15 +3,15 @@ model_dir: models/transformer-glove/
 
 data:
   # (required for train_and_eval and train run types).
-  train_features_file: data/preprocessed/lang2gloss/enasl/train/train.en
-  train_labels_file: data/preprocessed/lang2gloss/enasl/train/train.asl
+  train_features_file: data/preprocessed/lang2gloss/enasl/train/ENG-ASL_Train_0.046.en
+  train_labels_file: data/preprocessed/lang2gloss/enasl/train/ENG-ASL_Train_0.046.asl
 
   # (optional) Pharaoh alignments of the training files.
   #train_alignments: data/toy-ende/alignments-train.txt
 
   # (required for train_end_eval and eval run types).
-  eval_features_file: data/preprocessed/lang2gloss/enasl/dev/dev.en
-  eval_labels_file: data/preprocessed/lang2gloss/enasl/dev/dev.asl
+  eval_features_file: data/preprocessed/lang2gloss/enasl/dev/ENG-ASL_Dev_0.046.en
+  eval_labels_file: data/preprocessed/lang2gloss/enasl/dev/ENG-ASL_Dev_0.046.asl
 
   # (optional) Models may require additional resource files (e.g. vocabularies).
   source_words_vocabulary: pretrained-embeddings/glove.6B.300d.vocab
