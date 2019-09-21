@@ -6,11 +6,17 @@ import opennmt as onmt
 
 def model():
   return onmt.models.Transformer(
-      num_layers=2,
-      num_units=256,
-      num_heads=4,
-      ffn_inner_dim=1024,
-      dropout=0.1,
-      attention_dropout=0.1,
-      relu_dropout=0.1,
-      share_embeddings=onmt.models.EmbeddingsSharingLevel.ALL)
+	source_inputter=onmt.inputters.WordEmbedder(
+		vocabulary_file_key="source_words_vocabulary",
+		embedding_size=300),
+	target_inputter=onmt.inputters.WordEmbedder(
+          vocabulary_file_key="target_words_vocabulary",
+          embedding_size=300),
+    num_layers=2,
+    num_units=256,
+    num_heads=4,
+    ffn_inner_dim=1024,
+    dropout=0.1,
+    attention_dropout=0.1,
+    relu_dropout=0.1,
+    share_embeddings=onmt.models.EmbeddingsSharingLevel.ALL)
