@@ -167,6 +167,7 @@ if __name__ == "__main__":
 	]
 
 	preprocess_text_files(
+		tokenizer,
 		from_filepaths,
 		to_filepaths
 	)
