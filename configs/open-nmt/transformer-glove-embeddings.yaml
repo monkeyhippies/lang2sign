@@ -174,7 +174,7 @@ params:
 train:
   # (optional when batch_type=tokens) If not set, the training will search the largest
   # possible batch size.
-  batch_size: 4096
+  batch_size: 1024
   # (optional) Batch size is the number of "examples" or "tokens" (default: "examples").
   batch_type: tokens
   # (optional) Tune gradient accumulation to train with at least this effective batch size
