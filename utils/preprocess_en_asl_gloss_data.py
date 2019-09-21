@@ -1,3 +1,6 @@
+#!python
+import os, errno
+
 class EnAslTokenizer(object):
 
 	SUBWORD_TOKENS = [
@@ -61,6 +64,12 @@ class EnAslTokenizer(object):
 		self, from_filepath, to_filepath, sep=" "
 	):
 
+		try:
+			os.makedirs(os.path.dirname(to_filepath))
+		except FileExistsError:
+			# directory already exists
+			pass
+
 		tokens = self.tokenize_file(from_filepath)
 		with open(to_filepath, "wb") as file_obj:
 			file_obj.write(sep.join(tokens))
@@ -73,20 +82,91 @@ def trim_vocab(embedding_filepath, vocab_dict):
 
 	with open(embedding_filepath) as read_file_obj:
 		with open(
-			embedding_filepath + "trimmed", "wb"
+			embedding_filepath + ".trimmed", "wb"
 		) as write_file_obj:
 			for line in read_file_obj:
 				word = line.split(" ")[0]
 				if word in vocab_dict:
 					write_file_obj.write(line)
 
-def preprocess_embedding(training_text_filepaths, embedding_filepath):
+def preprocess_embedding(
+	tokenizer, training_text_filepaths, embedding_filepath
+):
 
-	tokenizer = EnAslTokenizer()
 	tokenizer.fit_to_files(training_text_filepaths)
-
 	trim_vocab(embedding_filepath, tokenizer.vocab_dict)
 
-def if __name__ == "__main__":
+def preprocess_text_files(
+	tokenizer,
+	from_filepaths,
+	to_filepaths
+):
 
-	preprocess_embedding(training_text_filepaths, embedding_filepath)
+	for from_filepath, to_filepath in zip(
+		from_filepaths, to_filepaths):
+
+		tokenizer.write_tokenized_file(
+			from_filepath,
+			to_filepath
+		)
+
+if __name__ == "__main__":
+	import argparse
+
+	parser = argparse.ArgumentParser(
+		description='Preprocess corpus files and embeddings'
+	)
+
+	parser.add_argument(
+		'--embedding_file',
+		dest="embedding_file",
+		type=str,
+		help="filepath of pretrained embedding"
+	)
+
+	parser.add_argument(
+		'--training_files',
+		dest="training_files",
+		type=str,
+		nargs='+',
+		help='list of text training files'
+	)
+
+	parser.add_argument(
+		'--dev_files',
+		dest="dev_files",
+		type=str,
+		nargs='+',
+		help='list of text dev files'
+	)
+
+	parser.add_argument(
+		'--test_files',
+		dest="test_files",
+		type=str,
+		nargs='+',
+		help='list of text test files'
+	)
+
+	args = parser.parse_args()	
+	tokenizer = EnAslTokenizer()
+	preprocess_embedding(
+		tokenizer,
+		args.training_files,
+		args.embedding_file
+	)
+
+	from_filepaths = \
+		args.training_files + \
+		args.dev_files + \
+		args.test_files
+
+	to_filepaths = [
+		f.replace("/raw/", "/preprocessed/")
+		for f in from_filepaths
+	]
+
+	preprocess_textfiles(
+		from_filepaths,
+		to_filepaths
+	)
