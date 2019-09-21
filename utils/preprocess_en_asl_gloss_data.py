@@ -113,6 +113,10 @@ def preprocess_text_files(
 if __name__ == "__main__":
 	import argparse
 
+	def list_str(args):
+
+		return args.split("'")
+
 	parser = argparse.ArgumentParser(
 		description='Preprocess corpus files and embeddings'
 	)
@@ -127,7 +131,7 @@ if __name__ == "__main__":
 	parser.add_argument(
 		'--training_files',
 		dest="training_files",
-		type=str,
+		type=list_str,
 		nargs='+',
 		help='list of text training files'
 	)
@@ -135,7 +139,7 @@ if __name__ == "__main__":
 	parser.add_argument(
 		'--dev_files',
 		dest="dev_files",
-		type=str,
+		type=list_str,
 		nargs='+',
 		help='list of text dev files'
 	)
@@ -143,7 +147,7 @@ if __name__ == "__main__":
 	parser.add_argument(
 		'--test_files',
 		dest="test_files",
-		type=str,
+		type=list_str,
 		nargs='+',
 		help='list of text test files'
 	)
