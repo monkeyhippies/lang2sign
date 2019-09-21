@@ -150,14 +150,14 @@ if __name__ == "__main__":
 		help='list of text test files'
 	)
 	args = parser.parse_args()
-	print(args.train_files)
 	tokenizer = EnAslTokenizer()
 	preprocess_embedding(
 		tokenizer,
 		args.train_files[0],
 		args.embedding_file
 	)
-
+	print(args.train_files)
+	print(args.dev_files)
 	from_filepaths = \
 		args.train_files[0] + \
 		args.dev_files[0] + \
