@@ -44,9 +44,9 @@ params:
   optimizer: AdamOptimizer
   # (optional) Additional optimizer parameters as defined in their documentation.
   optimizer_params:
-    beta1: 0.8
+    beta1: 0.9
     beta2: 0.998
-  learning_rate: 2.0
+  learning_rate: 1.0
 
   # (optional) Regexp or list of regexp matching variable names to not optimize.
   #freeze_variables:
@@ -95,9 +95,9 @@ params:
   # (optional unless decay_type is set) Decay parameters.
   decay_params:
     # The learning rate decay rate.
-    decay_rate: .7
+    decay_rate: 300
     # Decay every this many steps.
-    decay_steps: 8000
+    decay_steps: 70
     # (optional) If true, the learning rate is decayed in a staircase fashion (default: true).
     staircase: true
   # (optional) The number of training steps that make 1 decay step (default: 1).
@@ -232,7 +232,7 @@ eval:
   prefetch_buffer_size: 1
 
   # (optional) Evaluate every this many seconds (default: 18000).
-  eval_delay: 10800
+  eval_delay: 1200
 
   # (optional) Save evaluation predictions in model_dir/eval/.
   save_eval_predictions: false
