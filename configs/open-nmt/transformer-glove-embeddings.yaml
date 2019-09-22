@@ -191,7 +191,7 @@ train:
   keep_checkpoint_max: 3
 
   # (optional) Dump summaries and logs every this many steps (default: 100).
-  save_summary_steps: 1000
+  save_summary_steps: 250
 
   # (optional) Train for this many steps. If not set, train forever.
   train_steps: 1000000
