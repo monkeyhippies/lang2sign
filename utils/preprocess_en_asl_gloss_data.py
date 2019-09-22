@@ -13,6 +13,13 @@ class EnAslTokenizer(object):
 		"'d"
 	]
 
+	WORD_REPLACEMENTS {
+		" refore ": " therefore ",
+		" toger ": " together ",
+		" strengn ": " strengthen ",
+		" russium ": " russia "
+	}
+
 	def __init__(self, sep=" ", case_sensitive=False):
 
 		self.case_sensitive = case_sensitive
@@ -28,9 +35,15 @@ class EnAslTokenizer(object):
 		for subword in self.SUBWORD_TOKENS:
 			text = text.replace(subword, " " + subword)
 
+		for from_word, to_word in self.WORD_REPLACEMENTS.items():
+			text = text.replace(from_word, to_word)
+
 		return text.split(self.sep)
 
 	def _detokenize_string(self, tokens):
+
+		for from_word, to_word in self.WORD_REPLACEMENTS.items():
+			text = text.replace(to_word, from_word)
 
 		# Detokenize custom subwords
 		for subword in self.SUBWORD_TOKENS:
