@@ -46,7 +46,7 @@ params:
   optimizer_params:
     beta1: 0.9
     beta2: 0.998
-  learning_rate: 1.0
+  learning_rate: 1e-9
 
   # (optional) Regexp or list of regexp matching variable names to not optimize.
   #freeze_variables:
@@ -97,7 +97,7 @@ params:
     # The learning rate decay rate.
     decay_rate: 300
     # Decay every this many steps.
-    decay_steps: 70
+    decay_steps: 4000
     # (optional) If true, the learning rate is decayed in a staircase fashion (default: true).
     staircase: true
   # (optional) The number of training steps that make 1 decay step (default: 1).
@@ -106,9 +106,9 @@ params:
   #start_decay_steps: 50000
 
   # (optional) The learning rate minimum value (default: 0).
-  minimum_learning_rate: 0.000001
+  #minimum_learning_rate: 0.000001
   # (optional) The learning rate maximum value (default: 1e6).
-  maximum_learning_rate: 1e6
+  #maximum_learning_rate: 1e6
 
   # (optional) Type of scheduled sampling (can be "constant", "linear", "exponential",
   # or "inverse_sigmoid", default: "constant").
