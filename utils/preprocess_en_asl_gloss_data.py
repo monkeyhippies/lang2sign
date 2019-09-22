@@ -75,6 +75,9 @@ class EnAslTokenizer(object):
 			for line in lines:
 				tokens.append(self._tokenize_string(line))
 
+		if not self.case_sensitive:
+			tokens = [line.lower() for line in tokens]
+
 		return tokens
 
 	def write_tokenized_file(
