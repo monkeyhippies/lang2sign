@@ -176,7 +176,7 @@ train:
   # possible batch size.
   batch_size: 64
   # (optional) Batch size is the number of "examples" or "tokens" (default: "examples").
-  batch_type: tokens
+  batch_type: examples
   # (optional) Tune gradient accumulation to train with at least this effective batch size
   # (default: null).
   #effective_batch_size: 25000
