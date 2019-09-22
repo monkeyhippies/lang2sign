@@ -43,11 +43,12 @@ class EnAslTokenizer(object):
 		vocab_dict = dict()
 		for filepath in filepaths:
 			tokens = self.tokenize_file(filepath)
-			for token in tokens:
-				if token in vocab_dict:
-					vocab_dict[token] += 1
-				else:
-					vocab_dict[token] = 1
+			for sentence in tokens:
+				for word in sentence:
+					if token in vocab_dict:
+						vocab_dict[token] += 1
+					else:
+						vocab_dict[token] = 1
 
 		self.vocab_dict = vocab_dict
 
