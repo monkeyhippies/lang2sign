@@ -13,8 +13,9 @@ class EnAslTokenizer(object):
 		"'d"
 	]
 
-	def __init__(self, sep=" "):
+	def __init__(self, sep=" ", case_sensitive=False):
 
+		self.case_sensitive = case_sensitive
 		self.sep = sep
 		self.vocab_dict = None
 
@@ -45,10 +46,12 @@ class EnAslTokenizer(object):
 			tokens = self.tokenize_file(filepath)
 			for sentence in tokens:
 				for word in sentence:
-					if token in vocab_dict:
-						vocab_dict[token] += 1
-					else:
-						vocab_dict[token] = 1
+					if not self.case_sensitive:
+						word = word.lower()
+						if word in vocab_dict:
+							vocab_dict[word] += 1
+						else:
+							vocab_dict[word] = 1
 
 		self.vocab_dict = vocab_dict
 
@@ -75,7 +78,7 @@ class EnAslTokenizer(object):
 			for token in tokens:
 				file_obj.write(self.sep.join(token))
 
-def trim_vocab(embedding_filepath, vocab_dict, case_sensitive=False):
+def trim_vocab(embedding_filepath, vocab_dict):
 	"""
 	outputs a new pretrained embedding file with only words
 	from vocab dict
@@ -87,7 +90,7 @@ def trim_vocab(embedding_filepath, vocab_dict, case_sensitive=False):
 		) as write_file_obj:
 			for line in read_file_obj:
 				word = line.split(" ")[0]
-				if not case_sensitive:
+				if not self.case_sensitive:
 					word = word.lower()
 				if word in vocab_dict:
 					write_file_obj.write(line)
