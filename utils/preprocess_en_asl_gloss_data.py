@@ -13,7 +13,7 @@ class EnAslTokenizer(object):
 		"'d"
 	]
 
-	WORD_REPLACEMENTS {
+	WORD_REPLACEMENTS = {
 		" refore ": " therefore ",
 		" toger ": " together ",
 		" strengn ": " strengthen ",
