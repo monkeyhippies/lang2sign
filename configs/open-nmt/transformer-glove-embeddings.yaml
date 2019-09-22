@@ -31,7 +31,7 @@ data:
     path: pretrained-embeddings/glove.6B.300d.txt.trimmed
     with_header: False
     case_insensitive: True
-    trainable: True
+    trainable: False
 
   # (optional) For sequence tagging tasks, the tagging scheme that is used (e.g. BIOES).
   # For supported schemes, additional evaluation metrics could be computed such as
