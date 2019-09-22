@@ -13,8 +13,9 @@ class EnAslTokenizer(object):
 		"'d"
 	]
 
-	def __init__(self):
+	def __init__(self, sep=" "):
 
+		self.sep = sep
 		self.vocab_dict = None
 
 	def _tokenize_string(self, text):
@@ -26,7 +27,7 @@ class EnAslTokenizer(object):
 		for subword in self.SUBWORD_TOKENS:
 			text = text.replace(subword, " " + subword)
 
-		return text.split()
+		return text.split(self.sep)
 
 	def _detokenize_string(self, tokens):
 
@@ -36,7 +37,7 @@ class EnAslTokenizer(object):
 
 		text = text.replace(" - ", "-")
 
-		return " ".join(output)
+		return self.sep.join(output)
 
 	def fit_to_files(self, filepaths):
 		vocab_dict = dict()
@@ -51,16 +52,16 @@ class EnAslTokenizer(object):
 		self.vocab_dict = vocab_dict
 
 	def tokenize_file(self, filepath):
-
+		tokens = []
 		with open(filepath) as file_obj:
-			text = file_obj.read()
-			tokens = self._tokenize_string(text)
+			lines = file_obj.readlines()
+			for line in lines:
+				tokens.append(self._tokenize_string(line))
 
 		return tokens
 
 	def write_tokenized_file(
-		self, from_filepath, to_filepath, sep=" "
-	):
+		self, from_filepath, to_filepath):
 
 		try:
 			os.makedirs(os.path.dirname(to_filepath))
@@ -70,7 +71,8 @@ class EnAslTokenizer(object):
 
 		tokens = self.tokenize_file(from_filepath)
 		with open(to_filepath, "w") as file_obj:
-			file_obj.write(sep.join(tokens) + "\n")
+			for token in tokens:
+				file_obj.write(self.sep.join(token))
 
 def trim_vocab(embedding_filepath, vocab_dict, case_sensitive=False):
 	"""
@@ -87,7 +89,7 @@ def trim_vocab(embedding_filepath, vocab_dict, case_sensitive=False):
 				if not case_sensitive:
 					word = word.lower()
 				if word in vocab_dict:
-					write_file_obj.write(line + "\n")
+					write_file_obj.write(line)
 
 def preprocess_embedding(
 	tokenizer, train_text_filepaths, embedding_filepath
