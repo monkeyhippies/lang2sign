@@ -83,8 +83,8 @@ def trim_vocab(embedding_filepath, tokenizer):
 	outputs a new pretrained embedding file with only words
 	from vocab dict and a 
 	"""
-	with open(embedding_filepath) as read_file_obj, \
-	with open(embedding_filepath + ".trimmed.vocab", "w") as vocab_file_obj, \
+	with open(embedding_filepath) as read_file_obj,
+	with open(embedding_filepath + ".trimmed.vocab", "w") as vocab_file_obj,
 	with open(embedding_filepath + ".trimmed", "w") as write_file_obj:
 		for line in read_file_obj:
 			word = line.split(" ")[0]
