@@ -174,7 +174,7 @@ params:
 train:
   # (optional when batch_type=tokens) If not set, the training will search the largest
   # possible batch size.
-  batch_size: 4096
+  batch_size: 64
   # (optional) Batch size is the number of "examples" or "tokens" (default: "examples").
   batch_type: tokens
   # (optional) Tune gradient accumulation to train with at least this effective batch size
@@ -199,9 +199,9 @@ train:
   single_pass: false
 
   # (optional) The maximum length of feature sequences during training (default: null).
-  maximum_features_length: 70
+  maximum_features_length: 60
   # (optional) The maximum length of label sequences during training (default: null).
-  maximum_labels_length: 70
+  maximum_labels_length: 60
 
   # (optional) The width of the length buckets to select batch candidates from (default: 5).
   bucket_width: 5
