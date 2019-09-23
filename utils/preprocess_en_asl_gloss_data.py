@@ -53,7 +53,7 @@ class EnAslTokenizer(object):
 
 		return self.sep.join(output)
 
-	def fit_to_files(self, filepaths):
+	def fit_to_files(self, filepaths, min_count=None):
 		vocab_dict = dict()
 		for filepath in filepaths:
 			tokens = self.tokenize_file(filepath)
@@ -66,7 +66,14 @@ class EnAslTokenizer(object):
 						else:
 							vocab_dict[word] = 1
 
-		self.vocab_dict = vocab_dict
+		if min_count:
+			self.vocab_dict = {
+				key: value for key, value in \
+				vocab_dict.items() if value >= min_count
+			}
+
+		else:
+			self.vocab_dict = vocab_dict
 
 	def tokenize_file(self, filepath):
 		tokens = []
@@ -93,11 +100,12 @@ class EnAslTokenizer(object):
 			for token in tokens:
 				file_obj.write(self.sep.join(token))
 
-def trim_vocab(embedding_filepath, tokenizer):
+def trim_vocab(embedding_filepath, tokenizer, min_count=None):
 	"""
 	outputs a new pretrained embedding file with only words
 	from vocab dict and a 
 	"""
+
 	with open(embedding_filepath) as read_file_obj:
 		with open(embedding_filepath + ".trimmed.vocab", "w") as vocab_file_obj:
 			with open(embedding_filepath + ".trimmed", "w") as write_file_obj:
@@ -105,15 +113,16 @@ def trim_vocab(embedding_filepath, tokenizer):
 					word = line.split(" ")[0]
 					if not tokenizer.case_sensitive:
 						word = word.lower()
-					if word in tokenizer.vocab_dict:
+					if word in vocab_dict:
 						write_file_obj.write(line)
 						vocab_file_obj.write(word + "\n")
 
 def preprocess_embedding(
-	tokenizer, train_text_filepaths, embedding_filepath
+	tokenizer, train_text_filepaths,
+	embedding_filepath, min_count=None
 ):
 
-	tokenizer.fit_to_files(train_text_filepaths)
+	tokenizer.fit_to_files(train_text_filepaths, min_count)
 	trim_vocab(embedding_filepath, tokenizer)
 
 def preprocess_text_files(
@@ -139,6 +148,13 @@ if __name__ == "__main__":
 
 	parser = argparse.ArgumentParser(
 		description='Preprocess corpus files and embeddings'
+	)
+
+	parser.add_argument(
+		'--min_vocab_count',
+		dest="min_count",
+		type=int,
+		help="count cutoff for word to be added to vocab"
 	)
 
 	parser.add_argument(
@@ -176,7 +192,8 @@ if __name__ == "__main__":
 	preprocess_embedding(
 		tokenizer,
 		args.train_files[0],
-		args.embedding_file
+		args.embedding_file,
+		args.min_count
 	)
 	from_filepaths = \
 		args.train_files[0] + \
