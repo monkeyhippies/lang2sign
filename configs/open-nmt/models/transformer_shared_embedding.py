@@ -12,7 +12,7 @@ def model():
 	target_inputter=onmt.inputters.WordEmbedder(
           vocabulary_file_key="target_words_vocabulary",
           embedding_size=300),
-    num_layers=4,
+    num_layers=6,
     num_units=300,
     num_heads=4,
     ffn_inner_dim=1024,
