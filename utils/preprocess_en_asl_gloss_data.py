@@ -100,7 +100,7 @@ class EnAslTokenizer(object):
 			for token in tokens:
 				file_obj.write(self.sep.join(token))
 
-def trim_vocab(embedding_filepath, tokenizer, min_count=None):
+def trim_vocab(embedding_filepath, tokenizer):
 	"""
 	outputs a new pretrained embedding file with only words
 	from vocab dict and a 
@@ -113,7 +113,7 @@ def trim_vocab(embedding_filepath, tokenizer, min_count=None):
 					word = line.split(" ")[0]
 					if not tokenizer.case_sensitive:
 						word = word.lower()
-					if word in vocab_dict:
+					if word in tokenizer.vocab_dict:
 						write_file_obj.write(line)
 						vocab_file_obj.write(word + "\n")
 
