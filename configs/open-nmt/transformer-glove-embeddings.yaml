@@ -46,7 +46,7 @@ params:
   optimizer_params:
     beta1: 0.9
     beta2: 0.998
-  learning_rate: .00000000001
+  learning_rate: .000000001
 
   # (optional) Regexp or list of regexp matching variable names to not optimize.
   #freeze_variables:
