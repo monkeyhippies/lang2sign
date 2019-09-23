@@ -31,7 +31,7 @@ data:
     path: pretrained-embeddings/glove.6B.300d.txt.trimmed
     with_header: False
     case_insensitive: True
-    trainable: True
+    trainable: False
 
   # (optional) For sequence tagging tasks, the tagging scheme that is used (e.g. BIOES).
   # For supported schemes, additional evaluation metrics could be computed such as
@@ -56,7 +56,7 @@ params:
   #param_init: 0.1
 
   # (optional) Maximum gradients norm (default: null).
-  #clip_gradients: 5.0
+  clip_gradients: 5.0
   # (optional) 1 training step will process this many batches and accumulates
   # their gradients (default: 1).
   #gradients_accum: 1
