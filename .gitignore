@@ -10,6 +10,7 @@ __pycache__/
 
 # Distribution / packaging
 data/
+pretrained-embeddings/
 .Python
 build/
 develop-eggs/

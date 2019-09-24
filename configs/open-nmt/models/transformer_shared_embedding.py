@@ -14,7 +14,7 @@ def model():
           embedding_size=300),
     num_layers=6,
     num_units=300,
-    num_heads=10,
+    num_heads=6,
     ffn_inner_dim=2048,
     dropout=0.1,
     attention_dropout=0.1,
