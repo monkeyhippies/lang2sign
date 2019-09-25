@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 DOWNLOAD_FILE = 'dai-asllvd-BU_glossing_with_variations_HS_information-extended-urls-RU.xlsx'
-DOWNLOAD_DIR = 'data/raw/gloss2pose/'
+DOWNLOAD_DIR = 'video-metadata/'
 URL = 'http://www.bu.edu/asllrp/' + DOWNLOAD_FILE
 
 def download_file(download_dir, download_filename, url):
