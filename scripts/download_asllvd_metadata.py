@@ -33,9 +33,13 @@ def clean_asllvd_metadata(from_filepath, to_filepath):
   new_video_set = new_video_set.sort_values(by=["Gloss Variant", "Consultant", "Session", "Scene", "Start", "End"])
   new_video_set = new_video_set.reset_index().drop(["index"], axis=1)
   new_video_set["id"] = new_video_set.index
+  new_video_set["session_scene"] = new_video_set['Session'] + '-' + \
+    new_video_set['Scene'].apply(lambda x: str(x))
+  new_video_set["session_scene_id"] = (
+      new_video_set["session_scene"]
+  ).astype('category').cat.codes
   new_video_set.to_csv(to_filepath, index=False)
 
-  
 if __name__ == "__main__":
   csv_filepath = os.path.join(DOWNLOAD_DIR, "video_metadata.csv")
   print("Creating {}".format(csv_filepath))
