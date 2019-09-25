@@ -1,4 +1,5 @@
 data:
+	python download_asllvd_metadata.py
 	./scripts/download_en_asl_gloss_data.sh
 preprocess:
 	python scripts/preprocess_en_asl_gloss_data.py \
