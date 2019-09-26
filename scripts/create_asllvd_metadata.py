@@ -35,6 +35,8 @@ def clean_asllvd_metadata(from_filepath, to_filepath):
   new_video_set = new_video_set.reset_index().drop(["index"], axis=1)
   new_video_set["id"] = new_video_set.index
   new_video_set["Scene"] = new_video_set["Scene"].astype(int)
+  new_video_set["Start"] = new_video_set["End"].astype(int)
+  new_video_set["Start"] = new_video_set["End"].astype(int)
   new_video_set["session_scene"] = new_video_set['Session'] + '-' + \
     new_video_set['Scene'].apply(lambda x: str(x))
   new_video_set["session_scene_id"] = (

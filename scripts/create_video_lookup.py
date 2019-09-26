@@ -56,7 +56,6 @@ def download_large_file(url, download_dir, filename):
 def get_video_metadata(partition, num_partitions):
 	metadata = pd.read_csv(VIDEO_METADATA_FILE)
 	metadata = metadata[metadata["session_scene_id"] % num_partitions == partition]
-	metadata["Scene"] = metadata["Scene"].astype(int)
 	metadata = metadata[["session_scene_id", "Session", "Scene"]].drop_duplicates().sort_values(by=["session_scene_id"])
 	return [
 		Video(
