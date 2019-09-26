@@ -35,18 +35,18 @@ def create_pose(video_filepath, pose_filename, pose_dir, openpose_home):
 	video found at video_filepath
 	"""
 
-	openpose_exe = os.path.join(
+	openpose_dir = os.path.join(
 		openpose_home,
-		"openpose/build/examples/openpose/openpose.bin"
+		"openpose/"
 	)
 
-	unformatted_cmd = "{openpose_exe} -disable-blending=True --face --hand --video {video_filepath} --display 0  --write_video {pose_filepath} --write_json {pose_dir}"
+	unformatted_cmd = "cd {openpose_dir} && ./build/examples/openpose/openpose.bin -disable-blending=True --face --hand --video {video_filepath} --display 0  --write_video {pose_filepath} --write_json {pose_dir}"
 
 	os.makedirs(pose_dir, exist_ok=True)
 
 	pose_filepath = os.path.join(pose_dir, pose_filename)
 	cmd = unformatted_cmd.format(
-		openpose_exe=openpose_exe,
+		openpose_dir=openpose_dir,
 		video_filepath=video_filepath,
 		pose_filepath=pose_filepath,
 		pose_dir=pose_dir,
