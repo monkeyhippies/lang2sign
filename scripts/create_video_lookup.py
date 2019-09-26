@@ -90,13 +90,13 @@ if __name__ == "__main__":
 		help="Id of what partition you want to process (zero-indexes)"
 	)
 
-    parser.add_argument(
-        '--openpose-home',
-        dest="openpose_home",
-        type=str,
+	parser.add_argument(
+		'--openpose-home',
+		dest="openpose_home",
+		type=str,
 		default="/opt",
-        help="directory where openpose is install"
-    )
+		help="directory where openpose is install"
+	)
 
 	parser.add_argument(
 		'--number-partitions',
