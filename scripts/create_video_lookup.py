@@ -6,12 +6,6 @@ import shutil
 import pandas as pd
 from subprocess import Popen, PIPE
 
-OPENPOSE_CMD = os.path.join(
-	".",
-	os.environ["OPENPOSE_HOME"],
-	"openpose/build/examples/openpose/openpose.bin"
-)
-
 POSE_DIR = "data/raw/gloss2pose/poses/"
 VIDEO_DOWNLOAD_DIR = "data/raw/gloss2pose/signs/"
 VIDEO_METADATA_FILE = "video-metadata/video_metadata.csv"
