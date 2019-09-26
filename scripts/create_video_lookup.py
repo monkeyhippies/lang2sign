@@ -13,13 +13,10 @@ Video = namedtuple('video', 'id url')
 # taken from https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
 def download_large_file(url, download_dir):
 	os.makedirs(download_dir, exist_ok=True)
-    local_filename = os.path.join(
-		download_dir,
-		url.split('/')[-1]
-	)
-    with requests.get(url, stream=True) as response:
-        with open(local_filename, 'wb') as file_obj:
-            shutil.copyfileobj(response.raw, file_obj)
+    local_filename = os.path.join(download_dir, url.split('/')[-1])
+	with requests.get(url, stream=True) as response:
+		with open(local_filename, 'wb') as file_obj:
+			shutil.copyfileobj(response.raw, file_obj)
 
     return local_filename
   
