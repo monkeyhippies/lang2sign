@@ -27,6 +27,8 @@ def clean_asllvd_metadata(from_filepath, to_filepath):
 
   video_set = pd.read_excel(from_filepath)
   video_set = video_set.replace("============", np.nan)
+  video_set = video_set.replace("------------", np.nan)
+  video_set = video_set.replace('-------------------------', np.nan)
   video_set = video_set.dropna(axis=0, subset=["Gloss Variant", "Session", "Scene", "Start", "End"], how="all")
   new_video_set = video_set[["Gloss Variant", "Consultant", "Session", "Scene", "Start", "End"]]
   new_video_set = new_video_set.sort_values(by=["Gloss Variant", "Consultant", "Session", "Scene", "Start", "End"])
