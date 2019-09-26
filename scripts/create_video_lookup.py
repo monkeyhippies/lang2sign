@@ -10,8 +10,24 @@ POSE_DIR = "data/raw/gloss2pose/poses/"
 VIDEO_DOWNLOAD_DIR = "data/raw/gloss2pose/signs/"
 VIDEO_METADATA_FILE = "video-metadata/video_metadata.csv"
 UNFORMATTED_URL = "http://csr.bu.edu/ftp/asl/asllvd/asl-data2/quicktime/{session}/scene{scene}-camera1.mov"
-Video = namedtuple('video', 'id url session scene')
 
+class VideoSegmentMetadata(object):
+
+	def __init__(self, segment_id, start_frame, end_frame):
+
+		self.segment_id = segment_id
+		self.start_frame = start_frame
+		self.end_frame = end_frame
+
+class VideoMetadata(object):
+
+	def __init__(self, video_id, url, session, scene, segments_metadata):
+
+		self.video_id = video_id
+		self.url = url
+		self.session = session
+		self.scene = scene
+		self.segments_metadata = segments_metadata
 
 def create_pose(video_filepath, pose_filename, pose_dir, openpose_home):
 	"""
@@ -56,17 +72,30 @@ def download_large_file(url, download_dir, filename):
 def get_video_metadata(partition, num_partitions):
 	metadata = pd.read_csv(VIDEO_METADATA_FILE)
 	metadata = metadata[metadata["session_scene_id"] % num_partitions == partition]
-	metadata = metadata[["session_scene_id", "Session", "Scene"]].drop_duplicates().sort_values(by=["session_scene_id"])
+
+	collapsed_metadata = metadata[["session_scene_id", "Session", "Scene"]].drop_duplicates().sort_values(by=["session_scene_id"])
+	collapsed_metadata.index = collapsed_metadata["session_scene_id"]
+	metadata["id-start-end"] = metadata["id"].apply(str) + "-" + data["Start"].apply(str) + "-" + data["End"].apply(str)
+	frames_info = metadata.groupby(["session_scene_id"])["id-start-end"].apply(list)
+	collapsed_metadata = pd.concat([collapsed_metadata, frames_info], axis=1)
+
 	return [
-		Video(
+		VideoMetadata(
 			value[0],
 			UNFORMATTED_URL.format(
 				session=value[1],
 				scene=value[2]
 			),
 			value[1],
-			value[2]
-		) for value in metadata.values
+			value[2],
+			sorted([
+				VideoSegmentMetadata(
+					segment_id=int(segment.split("-")[0]),
+					start_frame=int(segment.split("-")[1]),
+					end_frame=int(segment.split("-")[2])
+				) for segment in value[3]
+			], key=lambda x: x.start_frame)
+		) for value in collapsed_metadata.values
 	]
 
 if __name__ == "__main__":
