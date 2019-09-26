@@ -65,5 +65,6 @@ if __name__ == "__main__":
   
 	urls = get_video_urls(partition_id, number_partitions)
 	for url in urls:
+		print("Processing {}".format(url.url.split("/")[-1])
 		download_large_file(url.url, VIDEO_DOWNLOAD_DIR)
 		time.sleep(10)
