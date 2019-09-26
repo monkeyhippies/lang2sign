@@ -1,5 +1,12 @@
+OPENPOSE_HOME := /opt
+
+install:
+	./scripts/install_openpose.sh ${OPENPOSE_HOME}
+
 create-video-lookup:
-	python scripts/create_video_lookup.py --number-partitions=1
+	python scripts/create_video_lookup.py \
+		--number-partitions=1 \
+		--openpose_home=${OPENPOSE_HOME}
 
 video-metadata:
 	python scripts/download_asllvd_metadata.py
