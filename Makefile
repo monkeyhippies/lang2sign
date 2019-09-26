@@ -8,8 +8,8 @@ create-video-lookup:
 		--number-partitions=1 \
 		--openpose-home=${OPENPOSE_HOME}
 
-video-metadata:
-	python scripts/download_asllvd_metadata.py
+create-video-metadata:
+	python scripts/create_asllvd_metadata.py
 
 data:
 	./scripts/download_en_asl_gloss_data.sh
