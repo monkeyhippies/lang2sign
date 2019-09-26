@@ -109,9 +109,9 @@ if __name__ == "__main__":
   
 	videos = get_video_metadata(partition_id, number_partitions)
 	for video in videos:
-		print("Processing {}".format(url.url.split("/")[-1]))
+		print("Processing {}".format(video.url.split("/")[-1]))
 		video_filepath = download_large_file(
-			url.url,
+			video.url,
 			VIDEO_DOWNLOAD_DIR,
 			"{}-{}.{}".format(
 				video.session,
