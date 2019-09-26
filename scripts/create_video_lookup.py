@@ -21,7 +21,7 @@ def create_pose(video_filepath, pose_filename, pose_dir, openpose_home):
 
 	openpose_exe = os.path.join(
 		openpose_home,
-		"build/examples/openpose/openpose.bin"
+		"openpose/build/examples/openpose/openpose.bin"
 	)
 
 	unformatted_cmd = "{openpose_exe} -disable-blending=True --face --hand --video {video_filepath} --display 0  --write_video {pose_filepath} --write_json {pose_dir}"
