@@ -65,8 +65,8 @@ def get_video_metadata(partition, num_partitions):
 				session=value[1],
 				scene=value[2]
 			),
-			session,
-			scene
+			value[1],
+			value[2]
 		) for value in metadata.values
 	]
 
