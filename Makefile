@@ -1,3 +1,6 @@
+create-video-lookup:
+	python scripts/create_video_lookup.py --number-partitions=1
+
 video-metadata:
 	python scripts/download_asllvd_metadata.py
 
