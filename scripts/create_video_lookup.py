@@ -154,3 +154,6 @@ if __name__ == "__main__":
 			POSE_DIR,
 			args.openpose_home
 		)
+
+		print("done")
+		break
