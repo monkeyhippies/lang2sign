@@ -124,5 +124,5 @@ if __name__ == "__main__":
 			video_filepath,
 			pose_filename,
 			POSE_DIR,
-			openpose_home
+			args.openpose_home
 		)
