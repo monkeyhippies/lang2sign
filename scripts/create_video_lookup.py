@@ -75,7 +75,7 @@ def get_video_metadata(partition, num_partitions):
 
 	collapsed_metadata = metadata[["session_scene_id", "Session", "Scene"]].drop_duplicates().sort_values(by=["session_scene_id"])
 	collapsed_metadata.index = collapsed_metadata["session_scene_id"]
-	metadata["id-start-end"] = metadata["id"].apply(str) + "-" + data["Start"].apply(str) + "-" + data["End"].apply(str)
+	metadata["id-start-end"] = metadata["id"].apply(str) + "-" + metadata["Start"].apply(str) + "-" + metadata["End"].apply(str)
 	frames_info = metadata.groupby(["session_scene_id"])["id-start-end"].apply(list)
 	collapsed_metadata = pd.concat([collapsed_metadata, frames_info], axis=1)
 
