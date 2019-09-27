@@ -1,7 +1,10 @@
-REPO_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+REPO_DIR := $(dir $(MKFILE_PATH))
 OPENPOSE_HOME := /opt
 CURRENT_DIR := $(shell pwd)
 
+test:
+	echo ${REPO_DIR}
 install:
 	./scripts/install_openpose.sh ${OPENPOSE_HOME}
 

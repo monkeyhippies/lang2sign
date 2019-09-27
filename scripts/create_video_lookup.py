@@ -155,9 +155,6 @@ if __name__ == "__main__":
 				video.url.split(".")[-1]
 			)
 		)
-		print(args.repo_directory)
-		print(video_filepath)
-		break
 		pose_filename = os.path.basename(video_filepath)
 		create_pose(
 			video_filepath,
