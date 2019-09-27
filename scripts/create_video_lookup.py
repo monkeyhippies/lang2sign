@@ -112,13 +112,13 @@ if __name__ == "__main__":
 		help="Id of what partition you want to process (zero-indexes)"
 	)
 
-    parser.add_argument(
-        '--repo-directory',
-        dest="repo_directory",
-        type=str,
-        default="./",
-        help="directory where lang2sign was cloned"
-    )
+	parser.add_argument(
+		'--repo-directory',
+		dest="repo_directory",
+		type=str,
+		default="./",
+		help="directory where lang2sign was cloned"
+	)
 
 	parser.add_argument(
 		'--openpose-home',
