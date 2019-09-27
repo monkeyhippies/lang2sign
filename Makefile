@@ -11,7 +11,7 @@ install:
 create-video-lookup:
 	python scripts/create_video_lookup.py \
 		--number-partitions=1 \
-		--openpose-home=${OPENPOSE_HOME}
+		--openpose-home=${OPENPOSE_HOME} \
 		--repo-directory=${REPO_DIR}
 
 create-video-metadata:
