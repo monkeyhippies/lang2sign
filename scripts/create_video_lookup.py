@@ -116,7 +116,6 @@ if __name__ == "__main__":
 		'--repo-directory',
 		dest="repo_directory",
 		type=str,
-		default="./",
 		help="directory where lang2sign was cloned"
 	)
 
