@@ -1,5 +1,9 @@
+REPO_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 OPENPOSE_HOME := /opt
+CURRENT_DIR := $(shell pwd)
 
+test:
+	echo ${REPO_DIR}
 install:
 	./scripts/install_openpose.sh ${OPENPOSE_HOME}
 
@@ -7,6 +11,7 @@ create-video-lookup:
 	python scripts/create_video_lookup.py \
 		--number-partitions=1 \
 		--openpose-home=${OPENPOSE_HOME}
+		--repo-directory=${REPO_DIR}
 
 create-video-metadata:
 	python scripts/create_asllvd_metadata.py

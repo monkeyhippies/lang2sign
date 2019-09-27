@@ -112,6 +112,14 @@ if __name__ == "__main__":
 		help="Id of what partition you want to process (zero-indexes)"
 	)
 
+    parser.add_argument(
+        '--repo-directory',
+        dest="repo_directory",
+        type=str,
+        default="./",
+        help="directory where lang2sign was cloned"
+    )
+
 	parser.add_argument(
 		'--openpose-home',
 		dest="openpose_home",
@@ -140,7 +148,7 @@ if __name__ == "__main__":
 		print("Processing {}".format(video.url.split("/")[-1]))
 		video_filepath = download_large_file(
 			video.url,
-			VIDEO_DOWNLOAD_DIR,
+			os.path.join(args.repo_directory, VIDEO_DOWNLOAD_DIR),
 			"{}-{}.{}".format(
 				video.session,
 				video.scene,
@@ -151,7 +159,7 @@ if __name__ == "__main__":
 		create_pose(
 			video_filepath,
 			pose_filename,
-			POSE_DIR,
+			os.path.join(args.repo_directory, POSE_DIR),
 			args.openpose_home
 		)
 
