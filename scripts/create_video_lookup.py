@@ -109,7 +109,7 @@ def create_pose(
         "openpose/"
     )
 
-    unformatted_cmd = "cd {openpose_dir} && ./build/examples/openpose/openpose.bin -disable-blending=True --face --hand --video {video_filepath} --display 0  --write_video {pose_filepath} --write_json {json_dir}"
+    unformatted_cmd = "cd {openpose_dir} && ./build/examples/openpose/openpose.bin -disable_blending=True --face --hand --video {video_filepath} --display 0  --write_video {pose_filepath} --write_json {json_dir}"
 
     
     os.makedirs(pose_dir, exist_ok=True)
