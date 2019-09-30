@@ -296,7 +296,7 @@ if __name__ == "__main__":
 		# If checkpoint_video_id isn't found, raise an Exception
 		if checkpoint_video_id is None:
 			pass
-		elif checkpoint_video_id < video.video_id:
+		elif checkpoint_video_id > video.video_id:
 			continue
 		elif checkpoint_video_id == video.video_id:
 			checkpoint_video_id = None
