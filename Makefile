@@ -14,6 +14,9 @@ test:
 	# Lint python files
 	find . -type f -name "*.py" -exec pylint -j 0 --exit-zero {} \;
 
+install:
+	python3 setup.py install
+
 deps:
 	./scripts/install_ffmpeg.sh
 	./scripts/install_openpose.sh ${OPENPOSE_HOME}
@@ -32,7 +35,8 @@ create-video-lookup:
 create-video-metadata:
 	python scripts/create_asllvd_metadata.py \
 		--s3-video-metadata-filepath=${S3_VIDEO_METADATA_FILEPATH} \
-		--s3-bucket=${S3_BUCKET}
+		--s3-bucket=${S3_BUCKET} \
+		--repo-directory=${REPO_DIR} \
 
 data:
 	./scripts/download_en_asl_gloss_data.sh

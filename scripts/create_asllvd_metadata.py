@@ -1,6 +1,5 @@
 import requests
 import os
-from getpass import getpass
 import datetime
 
 import boto3
@@ -67,8 +66,16 @@ if __name__ == "__main__":
 		'--s3-bucket',
 		dest="s3_bucket",
 		type=str,
-		help="s3_bucket of this project"
-	)
+        help="s3_bucket of this project"
+    )
+
+    parser.add_argument(
+        '--repo-directory',
+        dest="repo_directory",
+        type=str,
+        default="/opt",
+        help="local path to repo of this project"
+    )
 
 	args = parser.parse_args()
 
@@ -76,8 +83,10 @@ if __name__ == "__main__":
 	filepath = download_file(DOWNLOAD_DIR, DOWNLOAD_FILE, URL)
 	csv_filepath = clean_asllvd_metadata(filepath, csv_filepath)
 	print("Uploading video_metadata to {}".format(args.s3_filepath))
-	access_id = getpass('access id: ')
-	secret = getpass('secret id: ')
+
+    secrets_manager.set_base_directory(args.repo_directory)
+    access_id = secrets_manager.get("aws_access_key_id").get_or_prompt()
+    secret = secrets_manager.get("aws_secret_access_key").get_or_prompt()
 
 	s3 = boto3.resource(
 		's3', aws_access_key_id=access_id,

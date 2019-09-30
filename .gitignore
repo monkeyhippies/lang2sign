@@ -9,6 +9,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+secrets/
 data/
 pretrained-embeddings/
 .Python
