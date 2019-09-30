@@ -10,6 +10,10 @@ REPO_DIR := $(dir $(MKFILE_PATH))
 OPENPOSE_HOME := /opt
 CURRENT_DIR := $(shell pwd)
 
+test:
+	# Lint python files
+	find . -type f -name "*.py" -exec pylint -j 0 --exit-zero {} \;
+
 deps:
 	./scripts/install_ffmpeg.sh
 	./scripts/install_openpose.sh ${OPENPOSE_HOME}

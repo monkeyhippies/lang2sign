@@ -3,3 +3,4 @@
 OpenNMT-tf
 boto3
 requests
+pylint
