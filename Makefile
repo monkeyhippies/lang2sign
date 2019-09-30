@@ -25,7 +25,7 @@ deps:
 	./scripts/install_openpose.sh ${OPENPOSE_HOME}
 
 create-video-lookup:
-	python scripts/create_video_lookup.py \
+	python3 scripts/create_video_lookup.py \
 		--number-partitions=${NUM_PARTITIONS} \
 		--partition-id=${PARTITION_ID} \
 		--s3-video-metadata-filepath=${S3_VIDEO_METADATA_FILEPATH} \
@@ -36,7 +36,7 @@ create-video-lookup:
 		--aws-region=${AWS_DEFAULT_REGION}
 
 create-video-metadata:
-	python scripts/create_asllvd_metadata.py \
+	python3 scripts/create_asllvd_metadata.py \
 		--s3-video-metadata-filepath=${S3_VIDEO_METADATA_FILEPATH} \
 		--s3-bucket=${S3_BUCKET} \
 		--repo-directory=${REPO_DIR} \
@@ -45,7 +45,7 @@ data:
 	./scripts/download_en_asl_gloss_data.sh
 
 preprocess:
-	python scripts/preprocess_en_asl_gloss_data.py \
+	python3 scripts/preprocess_en_asl_gloss_data.py \
 		--min_vocab_count 1 \
 		--embedding_file=pretrained-embeddings/glove.6B.300d.txt \
 		--train_files=data/raw/lang2gloss/enasl/train/ENG-ASL_Train_0.046.en,data/raw/lang2gloss/enasl/train/ENG-ASL_Train_0.046.asl \
