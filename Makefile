@@ -25,7 +25,7 @@ deps:
 	./scripts/install_openpose.sh ${OPENPOSE_HOME}
 
 create-video-lookup:
-	python3 scripts/create_video_lookup.py \
+	python3 -u scripts/create_video_lookup.py \
 		--number-partitions=${NUM_PARTITIONS} \
 		--partition-id=${PARTITION_ID} \
 		--s3-video-metadata-filepath=${S3_VIDEO_METADATA_FILEPATH} \
