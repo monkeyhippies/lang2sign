@@ -149,7 +149,6 @@ def preprocess_text_files(
 if __name__ == "__main__":
     import argparse
     def list_str(arguments):
-
         return arguments.split(",")
 
     parser = argparse.ArgumentParser(
