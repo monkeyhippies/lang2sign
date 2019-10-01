@@ -142,7 +142,8 @@ def get_video_metadata(bucket, s3_filepath, download_filepath, partition, num_pa
     bucket.download_file(s3_filepath, download_filepath)
     metadata = pd.read_csv(download_filepath)
     metadata = metadata[metadata["session_scene_id"] % num_partitions == partition]
-
+    # Remove corrupt segments
+    metadata = metadata[metadata["is_corrupt"] == 0]
     collapsed_metadata = metadata[["session_scene_id", "Session", "Scene"]].drop_duplicates().sort_values(by=["session_scene_id"])
     collapsed_metadata.index = collapsed_metadata["session_scene_id"]
     metadata["id-start-end"] = metadata["id"].apply(str) + "-" + metadata["Start"].apply(str) + "-" + metadata["End"].apply(str)
