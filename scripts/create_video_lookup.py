@@ -11,6 +11,7 @@ import pandas as pd
 
 from lang2sign.utils.secrets import manager as secrets_manager
 from lang2sign.utils.bash import run_bash_cmd
+from lang2sign.utils.video import *
 
 CHECKPOINTS_DIR = "checkpoints/"
 POSE_DIR = "data/raw/gloss2pose/poses/"

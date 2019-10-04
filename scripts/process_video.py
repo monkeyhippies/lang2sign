@@ -2,7 +2,6 @@ from collections import namedtuple
 import os
 import boto3
 
-from pix2pix.tools.process import process
 from lang2sign.utils.secrets import manager as secrets_manager
 from lang2sign.utils.bash import run_bash_cmd
 from lang2sign.utils.video import *
@@ -17,7 +16,7 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        '--download-sub-directory',
+        '--sub-directory',
         dest="sub_directory",
         type=str,
         help="download video"
@@ -50,33 +49,20 @@ if __name__ == "__main__":
     access_id = secrets_manager.get("aws_access_key_id").get_or_prompt()
     secret = secrets_manager.get("aws_secret_access_key").get_or_prompt()
 
-    s3 = boto3.resource(
-        's3', aws_access_key_id=access_id,
-        aws_secret_access_key=secret
-    )
-
-    bucket = s3.Bucket(args.s3_bucket)
-
-    # If the bucket doesn't exist, create it
-    if not bucket.creation_date:
-        bucket = s3.create_bucket(
-            Bucket=args.s3_bucket,
-            CreateBucketConfiguration={'LocationConstraint': args.aws_region}
-        )
-
     # Download file
     download_directory = os.path.join(
-        repo_directory,
+        args.repo_directory,
         DOWNLOAD_DIR,
         args.sub_directory
     )
 
     download_directory = os.path.join(args.repo_directory, DOWNLOAD_DIR)
     os.makedirs(download_directory, exist_ok=True)
-    video_filepath = download_big_file(args.video_url, download_directory)
+    video_filename = os.path.basename(args.video_url)
+    video_filepath = download_large_file(args.video_url, download_directory, video_filename)
     video_filename = os.path.basename(video_filepath)
     pose_filename = "pose-" + video_filename
-    pose_filepath = create_pose(video_filepath, pose_filename, download_directory, openpose_home, download_directory)
+    pose_filepath = create_pose(video_filepath, pose_filename, download_directory, args.openpose_home, download_directory)
     pose_jpg_directory = os.path.join(
         download_directory,
         "pose/jpg/"
