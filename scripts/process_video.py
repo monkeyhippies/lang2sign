@@ -37,6 +37,14 @@ if __name__ == "__main__":
         help="download video"
     )
 
+    parser.add_argument(
+        '--openpose-home',
+        dest="openpose_home",
+        default="/opt",
+        type=str,
+        help="download video"
+    )
+
     args = parser.parse_args()
     secrets_manager.set_base_directory(args.repo_directory)
     access_id = secrets_manager.get("aws_access_key_id").get_or_prompt()
@@ -65,29 +73,40 @@ if __name__ == "__main__":
 
     download_directory = os.path.join(args.repo_directory, DOWNLOAD_DIR)
     os.makedirs(download_directory, exist_ok=True)
-    download_big_file(args.video_url, download_directory)
-
-    pose_filepaths = download_pose_files(download_directory, args.pose_ids)
-    combined_video_filepath = os.path.join(os.path.dirname(pose_filepaths[0]), "combined-pose.mov")
-    concat_videos(pose_filepaths, combined_video_filepath)
-    jpg_directory = os.path.join(
-        os.path.dirname(combined_video_filepath),
-        "jpg/"
+    video_filepath = download_big_file(args.video_url, download_directory)
+    video_filename = os.path.basename(video_filepath)
+    pose_filename = "pose-" + video_filename
+    pose_filepath = create_pose(video_filepath, pose_filename, download_directory, openpose_home, download_directory)
+    pose_jpg_directory = os.path.join(
+        download_directory,
+        "pose/jpg/"
     )
-    png_directory = os.path.join(
-        os.path.dirname(combined_video_filepath),
-        "png/"
+    pose_png_directory = os.path.join(
+        download_directory,
+        "pose/png/"
+    )
+
+    sign_jpg_directory = os.path.join(
+        download_directory,
+        "sign/jpg/"
+    )
+    sign_png_directory = os.path.join(
+        download_directory,
+        "sign/png/"
     )
     combined_directory = os.path.join(
-        os.path.dirname(combined_video_filepath),
+        download_directory,
         "combined/",
     )
-    os.makedirs(jpg_directory, exist_ok=True)
-    os.makedirs(png_directory, exist_ok=True)
+    os.makedirs(sign_jpg_directory, exist_ok=True)
+    os.makedirs(sign_png_directory, exist_ok=True)
+    os.makedirs(pose_jpg_directory, exist_ok=True)
+    os.makedirs(pose_png_directory, exist_ok=True)
     os.makedirs(combined_directory, exist_ok=True)
 
-    video_to_jpg(combined_video_filepath, jpg_directory)
 
-    jpg_to_png(jpg_directory, png_directory)
-    print("png output is in {}".format(png_directory))
-    process(png_directory, combined_directory)
+    video_to_jpg(video_filepath, sign_jpg_directory)
+    jpg_to_png(sign_jpg_directory, sign_png_directory)
+
+    video_to_jpg(pose_filepath, pose_jpg_directory)
+    jpg_to_png(pose_jpg_directory, pose_png_directory)
