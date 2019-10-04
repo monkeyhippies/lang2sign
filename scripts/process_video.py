@@ -17,47 +17,24 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        '--download-sub-directory',
+        dest="sub_directory",
+        type=str,
+        help="download video"
+    )
+
+    parser.add_argument(
         '--repo-directory',
         dest="repo_directory",
         type=str,
         help="local path to repo of this project"
     )
 
-
     parser.add_argument(
-        '--aws-region',
-        dest="aws_region",
+        '--video-url',
+        dest="video_url",
         type=str,
-        help="aws_region of S3 bucket for this project"
-    )
-
-    parser.add_argument(
-        '--s3-bucket',
-        dest="s3_bucket",
-        type=str,
-        help="s3_bucket of this project"
-    )
-
-    parser.add_argument(
-        '--pose-ids',
-        dest="pose_ids",
-        nargs='+',
-        type=int,
-        help="Id of pose video to download"
-    )
-
-    parser.add_argument(
-        '--s3-lookup-folder',
-        dest="s3_lookup_folder",
-        type=str,
-        help="where lookup pose videos are stored"
-    )
-
-    parser.add_argument(
-        '--s3-video-metadata-filepath',
-        dest="s3_metadata_filepath",
-        type=str,
-        help="filepath of video metadata in s3"
+        help="download video"
     )
 
     args = parser.parse_args()
@@ -78,8 +55,17 @@ if __name__ == "__main__":
             Bucket=args.s3_bucket,
             CreateBucketConfiguration={'LocationConstraint': args.aws_region}
         )
+
+    # Download file
+    download_directory = os.path.join(
+        repo_directory,
+        DOWNLOAD_DIR,
+        args.sub_directory
+    )
+
     download_directory = os.path.join(args.repo_directory, DOWNLOAD_DIR)
     os.makedirs(download_directory, exist_ok=True)
+    download_big_file(args.video_url, download_directory)
 
     pose_filepaths = download_pose_files(download_directory, args.pose_ids)
     combined_video_filepath = os.path.join(os.path.dirname(pose_filepaths[0]), "combined-pose.mov")
