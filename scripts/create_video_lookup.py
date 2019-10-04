@@ -8,9 +8,9 @@ import datetime
 import boto3
 import requests
 import pandas as pd
-from subprocess import Popen, PIPE, CalledProcessError
 
 from lang2sign.utils.secrets import manager as secrets_manager
+from lang2sign.utils.bash import run_bash_cmd
 
 CHECKPOINTS_DIR = "checkpoints/"
 POSE_DIR = "data/raw/gloss2pose/poses/"
@@ -50,13 +50,6 @@ def zip_dir(directory, zipped_filepath):
             ziph.write(os.path.join(root, filename))
 
     return zipped_filepath
-
-def run_bash_cmd(cmd):
-
-    p = Popen(['bash', '-c', cmd], stdout=PIPE, stderr=PIPE)
-    output, error = p.communicate()
-    if p.returncode != 0:
-        raise CalledProcessError(p.returncode, cmd, output, stderr=error)
 
 def clip_video(from_video_filepath, to_video_filepath, start_frame, end_frame):
 
