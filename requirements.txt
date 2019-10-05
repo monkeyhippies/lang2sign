@@ -1,5 +1,6 @@
 # To install these Python dependencies, please type:
 # pip install -r requirements.txt
+sacrebleu
 OpenNMT-tf
 boto3
 requests
