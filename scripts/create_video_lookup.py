@@ -1,3 +1,6 @@
+"""
+Downloads asllvd data, converts to pose, and uploads to s3
+"""
 from collections import namedtuple
 import os
 import zipfile
@@ -22,7 +25,6 @@ UNFORMATTED_URL = "http://csr.bu.edu/ftp/asl/asllvd/asl-data2/quicktime/{session
 class VideoSegmentMetadata(object):
 
     def __init__(self, segment_id, start_frame, end_frame):
-
         self.segment_id = segment_id
         self.start_frame = start_frame
         self.end_frame = end_frame
@@ -30,7 +32,6 @@ class VideoSegmentMetadata(object):
 class VideoMetadata(object):
 
     def __init__(self, video_id, url, session, scene, segments_metadata):
-
         self.video_id = video_id
         self.url = url
         self.session = session
@@ -38,7 +39,6 @@ class VideoMetadata(object):
         self.segments_metadata = segments_metadata
 
 def time_print(string):
-
     now = datetime.datetime.now()
     return print("{}: {}".format(now, string))
 

@@ -61,7 +61,7 @@ def resample_video(from_video_filepath, to_video_filepath, frame_rate):
 def create_pose(
     video_filepath, pose_filename, pose_dir,
     openpose_home, keypoints_dir
-):
+    ):
     """
     creates pose video and json data from
     video found at video_filepath

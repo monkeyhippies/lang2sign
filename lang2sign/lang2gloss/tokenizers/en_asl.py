@@ -1,4 +1,7 @@
 # pylint: disable=redefined-outer-name,unexpected-keyword-arg
+"""
+Custom tokenizer to (de)-tokenize English and ASL parellel corpus
+"""
 import os
 
 class EnAslTokenizer(object):
@@ -95,7 +98,6 @@ class EnAslTokenizer(object):
         with open(to_filepath, "w") as file_obj:
             for line in lines:
                 file_obj.write(line)
-
 
     def detokenize_file(self, filepath, capitalize=True):
         """
