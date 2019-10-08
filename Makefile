@@ -21,6 +21,7 @@ install:
 	python3 setup.py install
 
 deps:
+	pip3 install -r ${REPO_DIR}requirements.txt
 	./scripts/install_ffmpeg.sh
 	./scripts/install_openpose.sh ${OPENPOSE_HOME}
 
