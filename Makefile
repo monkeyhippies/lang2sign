@@ -13,6 +13,9 @@ REPO_DIR := $(dir $(MKFILE_PATH))
 OPENPOSE_HOME := /opt
 CURRENT_DIR := $(shell pwd)
 
+train-lang2gloss:
+	onmt-main train_and_eval --model configs/open-nmt/models/transformer_shared_embedding.py --config configs/open-nmt/transformer-glove-embeddings.yaml
+
 test:
 	# Lint python files
 	find . -type f -name "*.py" -exec pylint -j 0 --exit-zero {} \;
