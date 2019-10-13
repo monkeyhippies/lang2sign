@@ -2,7 +2,7 @@
 # pip install -r requirements.txt
 tqdm
 sacrebleu
-OpenNMT-tf
+git+https://github.com/monkeyhippies/OpenNMT-tf.git@bug
 boto3
 requests
 pylint
