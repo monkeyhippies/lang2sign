@@ -1,8 +1,9 @@
 # To install these Python dependencies, please type:
 # pip install -r requirements.txt
+tensorflow-gpu==1.14 #This is required for open-nmt-tf
 tqdm
 sacrebleu
-git+https://github.com/OpenNMT/OpenNMT-tf.git
+git+https://github.com/monkeyhippies/OpenNMT-tf.git@bug
 boto3
 requests
 pylint
