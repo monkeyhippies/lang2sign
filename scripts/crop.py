@@ -44,4 +44,4 @@ if __name__ == "__main__":
     for filename in tqdm(os.listdir(args.from_directory)):
         filepath = os.path.join(args.from_directory, filename)
         to_filepath = os.path.join(args.to_directory, filename)
-        crop(filepath, (125, 40, 525, 375), to_filepath)
+        crop(filepath, (125, 39, 525, 375), to_filepath)
