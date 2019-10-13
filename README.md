@@ -29,5 +29,16 @@ Currently, this just does python linting
 Pretrained models for inference will be available in the future
 
 ## Train
-Details to train model will be available in the future
+To train the lang2gloss transformer with pretrained gloVe embeddings, run
+
+```
+make train-lang2sign
+```
+
+Note that you'll first have to download and preprocess the training data, which can be done with these commands below
+
+```
+make install data pretrained-embeddings preprocess
+```
+
 
