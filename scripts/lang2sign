@@ -1,0 +1,15 @@
+#!/bin/bash
+
+TEMP_INPUT_FILE=lang.txt
+TEMP_GLOSS_FILE=unclean_gloss.txt
+GLOSS_FILE=gloss.txt
+
+echo $1 > input.txt
+onmt-main infer \
+    --model configs/open-nmt/models/transformer_shared_embedding.py \
+    --config configs/open-nmt/transformer-glove-embeddings.yaml \
+    --features_file "${TEMP_INPUT_FILE}" \
+    --predictions_file "${TEMP_GLOSS_FILE}" \
+    --checkpoint_path  models/lang2gloss-transformer/model.ckpt
+
+python3 scripts/clean_gloss.py --input-file="${TEMP_GLOSS_FILE}" --output-file="${GLOSS_FILE}"

@@ -44,7 +44,35 @@ make test
 Currently, this just does python linting
 
 ## Run Inference
-Pretrained models for inference will be available in the future
+#### Pretrained models
+###### Lang2Gloss
+You can download the archived and compressed (`.tar.gz` file) pretrained transformer checkpoint (trained for 100000 steps) from [google drive](https://drive.google.com/open?id=1-4peAKJdw7QOqyK8S9B1wGV6dERIpe5G). You'll have to extract .tar.gz file.
+
+###### Pose2Sign
+Pretrained model for inference will be available in the future
+
+#### Setup
+1. Put your pretrained lang2gloss transformer model checkpoint in a subdirectory `models/lang2gloss-transformer/`. (You'll need to put the `.index`, `.meta`, and `.data` files in this directory, all suffixed as `model.ckpt`.
+2. Put your video-metadata.csv file in `data/raw/gloss2pose/video_metadata.csv`. You can download a premade one from [google drive](https://drive.google.com/open?id=1-6mEINVrWKncQZP9BxfxecVVA4DszFSo).
+3. Put your lookup files in your s3 bucket under `gloss2pose/lookup/`. You can download an archived and compressed (`.tar.gz` file) premade lookup from [google drive](https://drive.google.com/open?id=1sRPA9nrA4sos6iy7bJoAl9kanyWeTz5D). Your pose lookup video files should have this structure in s3:
+```
+gloss2/pose/lookup/
+    pose-1.mov
+    pose-2.mov
+    pose-3.mov
+        .
+        .
+        .
+```
+
+4. PUT INSTRUCTIONS TO DOWNLAOD pix2pixHD and copy checkpoint
+
+#### Run
+Example:
+
+```
+scripts/lang2sign "how are you?"
+```
 
 ## Train
 #### Lang2gloss
