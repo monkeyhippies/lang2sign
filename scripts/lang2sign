@@ -1,15 +1,48 @@
 #!/bin/bash
 
-TEMP_INPUT_FILE=lang.txt
-TEMP_GLOSS_FILE=unclean_gloss.txt
-GLOSS_FILE=gloss.txt
+############FILL IN THESE VARIABLES#################
+S3_BUCKET=insight-ai-project-en-asl
+AWS_DEFAULT_REGION=us-west-2
+####################################################
 
-echo $1 > input.txt
+BASE_DIRECTORY=$(realpath "$( dirname $0 )")/../
+VIDEO_METADATA_FILEPATH="${BASE_DIRECTORY}"/data/raw/gloss2pose/video-metadata.csv
+RESULTS_DIR=results/
+INPUT_FILE=results/lang.txt
+INPUT_FILE_TOK=results/lang.txt.tok
+UNCLEAN_GLOSS_FILE=results/unclean_gloss.txt
+GLOSS_FILE=results/gloss.txt
+SIGN_FILE=results/sign.mov
+
+rm -rf results/
+mkdir -p results/
+
+echo $1 > "${INPUT_FILE}"
+python3 scripts/tokenize_file.py --input-file="${INPUT_FILE}"
+
 onmt-main infer \
     --model configs/open-nmt/models/transformer_shared_embedding.py \
     --config configs/open-nmt/transformer-glove-embeddings.yaml \
-    --features_file "${TEMP_INPUT_FILE}" \
-    --predictions_file "${TEMP_GLOSS_FILE}" \
+    --features_file "${INPUT_FILE_TOK}" \
+    --predictions_file "${UNCLEAN_GLOSS_FILE}" \
     --checkpoint_path  models/lang2gloss-transformer/model.ckpt
 
-python3 scripts/clean_gloss.py --input-file="${TEMP_GLOSS_FILE}" --output-file="${GLOSS_FILE}"
+python3 scripts/clean_gloss.py --input-file="${UNCLEAN_GLOSS_FILE}" --output-file="${GLOSS_FILE}"
+
+python3 scripts/lookup.py --repo-directory="${BASE_DIRECTORY}" \
+    --s3-bucket="${S3_BUCKET}" \
+    --aws-region="${AWS_DEFAULT_REGION}" \
+    --video-metadata-filepath="${VIDEO_METADATA_FILEPATH}" \
+    --s3-lookup-folder=gloss2pose/lookup \
+    --gloss-filepath="${GLOSS_FILE}" \
+    --output-directory="${RESULTS_DIR}"
+
+python3 scripts/crop.py --from-directory="${RESULTS_DIR}"/jpg --to-directory="${RESULTS_DIR}"/test_A
+
+cd pix2pixHD;
+python3 test.py --name pose2sign --dataroot "${BASE_DIRECTORY}"/"${RESULTS_DIR}" --label_nc 0 --results_dir "${BASE_DIRECTORY}"/"${RESULTS_DIR}"/sign/ --how_many=10000 --no_instance --resize_or_crop None
+cd ..;
+
+rm -rf "${BASE_DIRECTORY}"/"${RESULTS_DIR}"/sign/pose2sign/test_latest/images/*input_label.jpg
+
+python3 scripts/images_to_video.py --image-glob="${BASE_DIRECTORY}"/"${RESULTS_DIR}"/sign/pose2sign/test_latest/images/video-%06d_synthesized_image.jpg --video-filepath="${BASE_DIRECTORY}"/"${SIGN_FILE}"

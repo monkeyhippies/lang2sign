@@ -108,14 +108,14 @@ def write_concat_input_file(video_filepaths, input_filepath):
 
     return input_filepath
 
-def download_pose_files(download_directory, pose_ids):
+def download_pose_files(bucket, s3_lookup_folder, download_directory, pose_ids):
     pose_filepaths = []
     for pose_id in pose_ids:
         pose_filename = "pose-{}.mov".format(pose_id)
         pose_filepath = os.path.join(download_directory, pose_filename)
         bucket.download_file(
             os.path.join(
-                args.s3_lookup_folder,
+                s3_lookup_folder,
                 pose_filename
             ),
             pose_filepath
@@ -123,6 +123,24 @@ def download_pose_files(download_directory, pose_ids):
         pose_filepaths.append(pose_filepath)
 
     return pose_filepaths
+
+def images_to_video(image_filepaths, video_filepath):
+    """
+    creates video from directory of images
+    """
+
+
+    unformatted_cmd = "ffmpeg -r 30 -f image2 -s 400x336 -i {image_filepaths} -vcodec libx264 -crf 25  -pix_fmt yuv420p {video_filepath}"
+
+    cmd = unformatted_cmd.format(
+        image_filepaths=image_filepaths,
+        video_filepath=video_filepath,
+    )
+
+    run_bash_cmd(cmd)
+
+    return video_filepath
+
 
 def video_to_jpg(video_filepath, jpg_directory):
     """
@@ -165,7 +183,8 @@ def concat_videos(video_filepaths, output_filepath):
         "input.txt"
     )
 
-    write_concat_input_file(video_filepaths, input_filepath)
+    video_filenames = [os.path.basename(f) for f in video_filepaths]
+    write_concat_input_file(video_filenames, input_filepath)
 
     unformatted_cmd = "ffmpeg -f concat -safe 0 -i {} -codec copy -y {}"
 

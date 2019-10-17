@@ -1,6 +1,9 @@
 # To install these Python dependencies, please type:
 # pip install -r requirements.txt
 tensorflow-gpu==1.14 #This is required for open-nmt-tf
+dominate==2.4.0
+torch==1.3.0
+torchvision==0.4.1
 tqdm
 sacrebleu
 git+https://github.com/monkeyhippies/OpenNMT-tf.git@bug

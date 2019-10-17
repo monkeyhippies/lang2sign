@@ -1,12 +1,24 @@
-from collections import namedtuple
 import os
+
 import boto3
+import pandas as pd
 
 from lang2sign.utils.secrets import manager as secrets_manager
 from lang2sign.utils.bash import run_bash_cmd
 from lang2sign.utils.video import *
 
-DOWNLOAD_DIR = "data/preprocessed/gloss2sign/"
+def get_pose_ids(gloss_filepath, gloss):
+
+    videos = pd.read_csv(gloss_filepath)
+    pose_ids = list()
+    videos["Gloss Variant"] = videos["Gloss Variant"].apply(
+        lambda x: x.rstrip("+")
+    )
+    for term in gloss:
+        ids = videos[videos["Gloss Variant"] == term]["id"].values
+        if len(ids) > 0:
+            pose_ids.append(ids[0])
+    return pose_ids
 
 if __name__ == "__main__":
     import argparse
@@ -22,6 +34,12 @@ if __name__ == "__main__":
         help="local path to repo of this project"
     )
 
+    parser.add_argument(
+        '--output-directory',
+        dest="output_directory",
+        type=str,
+        help="directory to write output"
+    )
 
     parser.add_argument(
         '--aws-region',
@@ -38,11 +56,10 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        '--pose-ids',
-        dest="pose_ids",
-        nargs='+',
-        type=int,
-        help="Id of pose video to download"
+        '--gloss-filepath',
+        dest="gloss_filepath",
+        type=str,
+        help="gloss filepath"
     )
 
     parser.add_argument(
@@ -53,10 +70,10 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        '--s3-video-metadata-filepath',
-        dest="s3_metadata_filepath",
+        '--video-metadata-filepath',
+        dest="video_metadata_filepath",
         type=str,
-        help="filepath of video metadata in s3"
+        help="filepath of video metadata"
     )
 
     args = parser.parse_args()
@@ -77,30 +94,19 @@ if __name__ == "__main__":
             Bucket=args.s3_bucket,
             CreateBucketConfiguration={'LocationConstraint': args.aws_region}
         )
-    download_directory = os.path.join(args.repo_directory, DOWNLOAD_DIR)
-    os.makedirs(download_directory, exist_ok=True)
 
-    pose_filepaths = download_pose_files(download_directory, args.pose_ids)
+    with open(args.gloss_filepath, "r") as file_obj:
+        gloss = file_obj.read().strip().split()
+    pose_ids = get_pose_ids(args.video_metadata_filepath, gloss)
+
+    pose_filepaths = download_pose_files(bucket, args.s3_lookup_folder, args.output_directory, pose_ids)
     combined_video_filepath = os.path.join(os.path.dirname(pose_filepaths[0]), "combined-pose.mov")
     concat_videos(pose_filepaths, combined_video_filepath)
     jpg_directory = os.path.join(
         os.path.dirname(combined_video_filepath),
         "jpg/"
     )
-    png_directory = os.path.join(
-        os.path.dirname(combined_video_filepath),
-        "png/"
-    )
-    combined_directory = os.path.join(
-        os.path.dirname(combined_video_filepath),
-        "combined/",
-    )
+
     os.makedirs(jpg_directory, exist_ok=True)
-    os.makedirs(png_directory, exist_ok=True)
-    os.makedirs(combined_directory, exist_ok=True)
 
     video_to_jpg(combined_video_filepath, jpg_directory)
-
-    jpg_to_png(jpg_directory, png_directory)
-    print("png output is in {}".format(png_directory))
-    process(png_directory, combined_directory)

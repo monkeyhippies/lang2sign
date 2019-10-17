@@ -13,7 +13,14 @@ def clean_text(text):
         "X-WE": "IX-1p-pl-arc",
         "X-IT": "IX:i",
         "X-HE": "IX:i",
+        "X-SHE": "IX:i",
         "X-YOU": "IX-2p",
+        "YOU": "IX-2p",
+        "I": "Ix-1p",
+        "WE": "IX-1p-pl-arc",
+        "IT": "IX:i",
+        "HE": "IX:i",
+        "SHE": "IX:i",
         "X-Y": "IX-2p", # X-Y is you in the general sense so this might not be good
         "THIS": "IX:i",
         "EU": "ns-EUROPE",
@@ -62,7 +69,7 @@ if __name__ == "__main__":
         args.input_file,
     )
 
-    text = clean_text(text)
+    text = "\n".join([clean_text(line) for line in text])
 
     with open(args.output_file, "w") as file_obj:
         file_obj.write(text)
