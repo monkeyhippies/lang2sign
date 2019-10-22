@@ -22,7 +22,7 @@ if __name__ == "__main__":
     tokenizer = EnAslTokenizer()
 
     print(
-        "Writing detokenized file to {}".format(
+        "Writing tokenized file to {}".format(
             output_filepath
         )
     )
