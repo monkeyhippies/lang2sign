@@ -89,10 +89,12 @@ class EnAslTokenizer(object):
     def write_detokenized_file(
         self, from_filepath, to_filepath):
 
-        os.makedirs(
-            os.path.dirname(to_filepath),
-            exist_ok=True
-        )
+        dirname = os.path.dirname(to_filepath)
+        if dirname:
+            os.makedirs(
+                dirname,
+                exist_ok=True
+            )
 
         lines = self.detokenize_file(from_filepath)
         with open(to_filepath, "w") as file_obj:
@@ -129,10 +131,12 @@ class EnAslTokenizer(object):
     def write_tokenized_file(
         self, from_filepath, to_filepath):
 
-        os.makedirs(
-            os.path.dirname(to_filepath),
-            exist_ok=True
-        )
+        dirname = os.path.dirname(to_filepath)
+        if dirname:
+            os.makedirs(
+                dirname,
+                exist_ok=True
+            )
 
         tokens = self.tokenize_file(from_filepath)
         with open(to_filepath, "w") as file_obj:
