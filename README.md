@@ -75,7 +75,7 @@ make data pretrained-embeddings preprocess
 git clone https://github.com/monkeyhippies/pix2pixHD.git
 ```
 
-6. Put your pretrained pix2pixHD models into `pix2pixHD/pix2pixHD/checkpoints/pose2sign/`. This should be 2 `.pth` files, one for the generator and one for the discriminator. You can download an archived and compressed (`.tar.gz` file) premade lookup from [google drive](https://drive.google.com/open?id=1f6nzXxpmll6aHUvoM7y3HO7YMi-a9wCi).
+6. Put your pretrained pix2pixHD models into `pix2pixHD/pix2pixHD/checkpoints/pose2sign/`. This should be 2 `.pth` files, one for the generator and one for the discriminator. You can download an archived and compressed (`.tar.gz` file) premade lookup from [google drive](https://drive.google.com/open?id=1nezi8VuEBm8PvEt1RVkAozNfDtTodi1u).
 #### Run
 Example:
 
