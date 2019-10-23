@@ -49,7 +49,7 @@ Currently, this just does python linting
 You can download the archived and compressed (`.tar.gz` file) pretrained transformer checkpoint (trained for 100000 steps) from [google drive](https://drive.google.com/open?id=1-4peAKJdw7QOqyK8S9B1wGV6dERIpe5G). You'll have to extract .tar.gz file.
 
 ###### Pose2Sign
-Pretrained model for inference will be available in the future
+You can download an archived and compressed (`.tar.gz` file) pretrained pix2pixHD model from [google drive](https://drive.google.com/open?id=1nezi8VuEBm8PvEt1RVkAozNfDtTodi1u).
 
 #### Setup
 0. Make sure you followed the steps in the Dependencies, Installation, and Configs sections
@@ -75,7 +75,7 @@ make data pretrained-embeddings preprocess
 git clone https://github.com/monkeyhippies/pix2pixHD.git
 ```
 
-6. Put your pretrained pix2pixHD models into `pix2pixHD/pix2pixHD/checkpoints/pose2sign/`. This should be 2 `.pth` files, one for the generator and one for the discriminator. You can download an archived and compressed (`.tar.gz` file) premade lookup from [google drive](https://drive.google.com/open?id=1nezi8VuEBm8PvEt1RVkAozNfDtTodi1u).
+6. Put your pretrained pix2pixHD models into `pix2pixHD/pix2pixHD/checkpoints/pose2sign/`. This should be 2 `.pth` files, one for the generator and one for the discriminator. You can download an archived and compressed (`.tar.gz` file) pretrained model from [google drive](https://drive.google.com/open?id=1nezi8VuEBm8PvEt1RVkAozNfDtTodi1u).
 #### Run
 Example:
 
@@ -98,8 +98,48 @@ make deps install data pretrained-embeddings preprocess
 ```
 
 #### Pose2Sign
+1. Clone my fork of pix2pixHD.
+```
+git clone https://github.com/monkeyhippies/pix2pixHD.git
+```
 
-TBD
+
+2. Put your preprocessed training data in the pix2pixHD repo under the subdirectory `datasets/pose2sign/`. Your data should look like this:
+```
+pix2pixHD/datasets/pose2sign/
+    train_A/
+        segment-1-0001.jpg
+        segment-1-0002.jpg
+            .
+            .
+            .
+    train_B/
+        pose-1-0001.jpg
+        pose-1-0002.jpg
+            .
+            .
+            .
+    test_A/
+        segment-101-0001.jpg
+        segment-101-0002.jpg
+            .
+            .
+            .
+    test_B/
+        pose-101-0001.jpg
+        pose-101-0002.jpg
+            .
+            .
+            .
+```
+
+3. Within the pix2pixHD repo, run the following command to train:
+```
+python3 train.py --name pose2sign --dataroot /home/ubuntu/pix2pixHD/datasets/pose2sign/ --label_nc 0 --no_instance --resize_or_crop None
+```
+
+You can download a pre-processed train and test dataset from [google drive](https://drive.google.com/open?id=1WdVdp7tM5eXHJFXbt-Kakg44VNSPuVq0)
+Training on the pre-processed dataset for 11 epochs, which produces reasonable results, will take around 10 days on a single tesla k80 gpu.
 
 ## Pose Lookup Creation
 If you would like to create the pose lookup from scratch:
