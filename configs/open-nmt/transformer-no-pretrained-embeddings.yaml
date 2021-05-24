@@ -90,11 +90,11 @@ params:
   # (optional unless decay_type is set) Decay parameters.
   decay_params:
     # The learning rate decay rate.
-    decay_rate: 512
+    model_dim: 512
     # Decay every this many steps.
-    decay_steps: 4000
+    warmup_steps: 4000
     # (optional) If true, the learning rate is decayed in a staircase fashion (default: true).
-    staircase: true
+    #staircase: true
   # (optional) The number of training steps that make 1 decay step (default: 1).
   #decay_step_duration: 1
   # (optional) After how many steps to start the decay (default: 0).
