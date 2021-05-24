@@ -14,8 +14,8 @@ data:
   eval_labels_file: data/preprocessed/lang2gloss/enasl/dev/ENG-ASL_Dev_0.046.asl
 
   # (optional) Models may require additional resource files (e.g. vocabularies).
-  source_words_vocabulary: pretrained-embeddings/glove.6B.300d.txt.trimmed.vocab
-  target_words_vocabulary: pretrained-embeddings/glove.6B.300d.txt.trimmed.vocab
+  source_vocabulary: pretrained-embeddings/glove.6B.300d.txt.trimmed.vocab
+  target_vocabulary: pretrained-embeddings/glove.6B.300d.txt.trimmed.vocab
 
   # (optional) OpenNMT tokenization configuration (or path to a configuration file).
   # See also: https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md
