@@ -14,5 +14,4 @@ def model():
     ffn_inner_dim=2048,
     dropout=0.1,
     attention_dropout=0.1,
-    relu_dropout=0.1,
     share_embeddings=onmt.models.EmbeddingsSharingLevel.ALL)
