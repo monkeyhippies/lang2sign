@@ -36,7 +36,7 @@ data:
 # Model and optimization parameters.
 params:
   # The optimizer class name in tf.train, tf.contrib.opt, or opennmt.optimizers.
-  optimizer: AdamOptimizer
+  optimizer: Adam
   # (optional) Additional optimizer parameters as defined in their documentation.
   optimizer_params:
     beta1: 0.9
